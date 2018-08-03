@@ -6,10 +6,10 @@ import java.util.List;
 
 /**
  * @Author: Bojun Ji
- * @Description: query interface
+ * @Description: product interface
  * @Date: 2018/8/4_1:43 AM
  */
-public interface IQueryService {
+public interface IProductService {
     ProductInfo queryProductInfo(String productName);
 
     List<ProductInfo> queryProductInfo(List<String> productNames);

@@ -67,7 +67,8 @@ public class JetCacheConfig {
         globalCacheConfig.setConfigProvider(configProvider);
         globalCacheConfig.setLocalCacheBuilders(localBuilders);
         globalCacheConfig.setRemoteCacheBuilders(remoteBuilders);
-        globalCacheConfig.setStatIntervalMinutes(15);
+        globalCacheConfig.setStatIntervalMinutes(30);
+        //no multiple area
         globalCacheConfig.setAreaInCacheName(false);
 
         return globalCacheConfig;

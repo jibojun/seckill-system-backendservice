@@ -1,7 +1,8 @@
 package com.seckill.backend.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.seckill.backend.common.entity.ProductInfo;
-import com.seckill.backend.service.api.IQueryService;
+import com.seckill.backend.service.api.IProductService;
 
 import java.util.List;
 
@@ -10,7 +11,8 @@ import java.util.List;
  * @Description: query product info
  * @Date: 2018/8/4_1:48 AM
  */
-public class QueryServiceImpl implements IQueryService {
+@Service(timeout = 1500, retries = 3)
+public class ProductServiceImpl implements IProductService {
     @Override
     public ProductInfo queryProductInfo(String productName) {
         return null;
@@ -20,4 +22,5 @@ public class QueryServiceImpl implements IQueryService {
     public List<ProductInfo> queryProductInfo(List<String> productNames) {
         return null;
     }
+
 }
