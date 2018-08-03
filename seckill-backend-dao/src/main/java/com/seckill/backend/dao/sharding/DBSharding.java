@@ -8,7 +8,7 @@ import java.util.Collection;
 
 /**
  * @Author: Bojun Ji
- * @Description:
+ * @Description: db sharding
  * @Date: 2018/8/3_12:12 AM
  */
 public class DBSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {

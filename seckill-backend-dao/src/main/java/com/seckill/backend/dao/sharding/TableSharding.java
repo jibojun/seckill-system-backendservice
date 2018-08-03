@@ -7,7 +7,7 @@ import java.util.Collection;
 
 /**
  * @Author: Bojun Ji
- * @Description:
+ * @Description: table sharding
  * @Date: 2018/8/3_12:12 AM
  */
 public class TableSharding implements SingleKeyTableShardingAlgorithm<Integer> {

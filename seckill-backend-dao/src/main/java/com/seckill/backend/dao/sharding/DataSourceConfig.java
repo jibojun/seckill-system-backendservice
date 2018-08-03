@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * @Author: Bojun Ji
- * @Description:
+ * @Description: db sharding configuration
  * @Date: 2018/8/3_12:39 AM
  */
 @Configuration
