@@ -10,6 +10,6 @@ import java.util.HashMap;
  * @Date: 2018/8/4_2:20 AM
  */
 public class MqConsumer {
-    //TODO: mq consumer
+    //TODO: mq consumer,get submitted order from high level system
     KafkaConsumer<String, String> consumer = new KafkaConsumer(new HashMap<>());
 }
