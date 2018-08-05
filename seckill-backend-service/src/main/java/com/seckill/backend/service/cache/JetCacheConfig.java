@@ -36,10 +36,13 @@ public class JetCacheConfig {
     public Pool<Jedis> pool() {
         //redis pool
         GenericObjectPoolConfig redisPoolConfig = new GenericObjectPoolConfig();
-        redisPoolConfig.setMinIdle(2);
+        redisPoolConfig.setMinIdle(5);
         redisPoolConfig.setMaxIdle(10);
-        redisPoolConfig.setMaxTotal(10);
-        return new JedisPool(redisPoolConfig, "localhost", 6379);
+        redisPoolConfig.setMaxTotal(20);
+        redisPoolConfig.setTestOnBorrow(true);
+        redisPoolConfig.setTestOnReturn(false);
+        redisPoolConfig.setBlockWhenExhausted(true);
+        return new JedisPool(redisPoolConfig, "127.0.0.1", 6379);
     }
 
     @Bean
