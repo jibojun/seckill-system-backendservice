@@ -6,7 +6,7 @@
 
     <listener>
         <listener-class>
-            org.springframework.web.context.ContextLoaderListener
+            com.seckill.backend.service.startup.ContextLoaderListenerNew
         </listener-class>
     </listener>
 
