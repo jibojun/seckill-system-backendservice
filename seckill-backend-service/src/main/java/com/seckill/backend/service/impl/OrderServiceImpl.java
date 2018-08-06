@@ -23,6 +23,7 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public OrderInfo queryOrder(long orderId) {
         OrderInfo orderInfo=cacheManager.getOrderCache(orderId);
+        //TODO, distribution lock, only 1 thread to get data from DB and update cache
         return orderInfo;
     }
 }
