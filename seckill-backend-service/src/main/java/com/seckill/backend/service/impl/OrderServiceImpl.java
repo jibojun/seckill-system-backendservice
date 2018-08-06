@@ -2,6 +2,8 @@ package com.seckill.backend.service.impl;
 
 import com.seckill.backend.common.entity.OrderInfo;
 import com.seckill.backend.service.api.IOrderService;
+import com.seckill.backend.service.cache.CacheManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @Author: Bojun Ji
@@ -9,6 +11,10 @@ import com.seckill.backend.service.api.IOrderService;
  * @Date: 2018/8/4_2:28 AM
  */
 public class OrderServiceImpl implements IOrderService {
+    @Autowired
+    private CacheManager cacheManager;
+
+
     @Override
     public void submitOrder(long orderId) {
 
@@ -16,7 +22,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public OrderInfo queryOrder(long orderId) {
-        return null;
+        OrderInfo orderInfo=cacheManager.getOrderCache(orderId);
+        return orderInfo;
     }
-
 }
