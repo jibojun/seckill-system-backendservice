@@ -76,6 +76,5 @@ public class JetCacheConfig {
         //no multiple area
         globalCacheConfig.setAreaInCacheName(false);
         return globalCacheConfig;
-
     }
 }
