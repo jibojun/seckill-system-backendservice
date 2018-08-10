@@ -11,13 +11,14 @@ import com.alicp.jetcache.redis.RedisCacheBuilder;
 import com.alicp.jetcache.support.FastjsonKeyConvertor;
 import com.alicp.jetcache.support.JavaValueDecoder;
 import com.alicp.jetcache.support.JavaValueEncoder;
-import com.seckill.backend.common.constants.RedisConstants;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import com.seckill.backend.common.lock.RedisPool;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.util.Pool;
+//import redis.clients.jedis.Jedis;
+//import redis.clients.jedis.JedisPool;
+//import redis.clients.util.Pool;
+//import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+//import com.seckill.backend.common.constants.RedisConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,18 +34,18 @@ import java.util.Map;
 @EnableCreateCacheAnnotation
 public class JetCacheConfig {
 
-    @Bean
-    public Pool<Jedis> pool() {
-        //redis pool
-        GenericObjectPoolConfig redisPoolConfig = new GenericObjectPoolConfig();
-        redisPoolConfig.setMinIdle(5);
-        redisPoolConfig.setMaxIdle(10);
-        redisPoolConfig.setMaxTotal(20);
-        redisPoolConfig.setTestOnBorrow(true);
-        redisPoolConfig.setTestOnReturn(false);
-        redisPoolConfig.setBlockWhenExhausted(true);
-        return new JedisPool(redisPoolConfig, RedisConstants.REDIS_HOST, RedisConstants.REDIS_PORT);
-    }
+//    @Bean
+//    public Pool<Jedis> pool() {
+//        //redis pool
+//        GenericObjectPoolConfig redisPoolConfig = new GenericObjectPoolConfig();
+//        redisPoolConfig.setMinIdle(5);
+//        redisPoolConfig.setMaxIdle(10);
+//        redisPoolConfig.setMaxTotal(20);
+//        redisPoolConfig.setTestOnBorrow(true);
+//        redisPoolConfig.setTestOnReturn(false);
+//        redisPoolConfig.setBlockWhenExhausted(true);
+//        return new JedisPool(redisPoolConfig, RedisConstants.REDIS_HOST, RedisConstants.REDIS_PORT);
+//    }
 
     @Bean
     public SpringConfigProvider springConfigProvider() {
@@ -52,7 +53,7 @@ public class JetCacheConfig {
     }
 
     @Bean
-    public GlobalCacheConfig config(SpringConfigProvider configProvider, Pool<Jedis> pool) {
+    public GlobalCacheConfig config(SpringConfigProvider configProvider) {
         //local cache, caffeine
         Map localBuilders = new HashMap();
         EmbeddedCacheBuilder localBuilder = CaffeineCacheBuilder.createCaffeineCacheBuilder().keyConvertor(FastjsonKeyConvertor.INSTANCE);
@@ -64,7 +65,7 @@ public class JetCacheConfig {
                 .keyConvertor(FastjsonKeyConvertor.INSTANCE)
                 .valueEncoder(JavaValueEncoder.INSTANCE)
                 .valueDecoder(JavaValueDecoder.INSTANCE)
-                .jedisPool(pool);
+                .jedisPool(RedisPool.getPool());
         remoteBuilders.put(CacheConsts.DEFAULT_AREA, remoteCacheBuilder);
 
         //configuration

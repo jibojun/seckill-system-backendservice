@@ -32,7 +32,7 @@ public class RedisPool {
         pool = new JedisPool(config, RedisConstants.REDIS_HOST, RedisConstants.REDIS_PORT);
     }
 
-    private static JedisPool getPool() {
+    public static JedisPool getPool() {
         return pool;
     }
 
