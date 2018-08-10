@@ -1,4 +1,4 @@
-package com.seckill.backend.common.lock;
+package com.seckill.backend.common.constants;
 
 /**
  * @Author: Bojun Ji

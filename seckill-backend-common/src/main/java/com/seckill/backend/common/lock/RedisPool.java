@@ -1,5 +1,6 @@
 package com.seckill.backend.common.lock;
 
+import com.seckill.backend.common.constants.RedisConstants;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
