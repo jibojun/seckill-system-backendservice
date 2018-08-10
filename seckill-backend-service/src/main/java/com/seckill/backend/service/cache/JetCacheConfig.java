@@ -11,6 +11,7 @@ import com.alicp.jetcache.redis.RedisCacheBuilder;
 import com.alicp.jetcache.support.FastjsonKeyConvertor;
 import com.alicp.jetcache.support.JavaValueDecoder;
 import com.alicp.jetcache.support.JavaValueEncoder;
+import com.seckill.backend.common.constants.RedisConstants;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +43,7 @@ public class JetCacheConfig {
         redisPoolConfig.setTestOnBorrow(true);
         redisPoolConfig.setTestOnReturn(false);
         redisPoolConfig.setBlockWhenExhausted(true);
-        return new JedisPool(redisPoolConfig, "127.0.0.1", 6379);
+        return new JedisPool(redisPoolConfig, RedisConstants.REDIS_HOST, RedisConstants.REDIS_PORT);
     }
 
     @Bean
@@ -66,6 +67,7 @@ public class JetCacheConfig {
                 .jedisPool(pool);
         remoteBuilders.put(CacheConsts.DEFAULT_AREA, remoteCacheBuilder);
 
+        //configuration
         GlobalCacheConfig globalCacheConfig = new GlobalCacheConfig();
         globalCacheConfig.setConfigProvider(configProvider);
         globalCacheConfig.setLocalCacheBuilders(localBuilders);
@@ -73,7 +75,6 @@ public class JetCacheConfig {
         globalCacheConfig.setStatIntervalMinutes(30);
         //no multiple area
         globalCacheConfig.setAreaInCacheName(false);
-
         return globalCacheConfig;
 
     }

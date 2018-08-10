@@ -25,7 +25,7 @@ public class RedisPool {
         config.setTestOnBorrow(RedisConstants.REDIS_TEST_ON_BORROW);
         config.setTestOnReturn(RedisConstants.REDIS_TEST_ON_RETURN);
         config.setBlockWhenExhausted(RedisConstants.REDIS_BLOCK_WHEN_EXHAUSTED);
-        pool = new JedisPool();
+        pool = new JedisPool(config, RedisConstants.REDIS_HOST, RedisConstants.REDIS_PORT);
     }
 
     private static JedisPool getPool() {
