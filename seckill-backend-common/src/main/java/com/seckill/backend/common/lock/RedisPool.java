@@ -14,6 +14,10 @@ public class RedisPool {
 
     private static JedisPool pool;
 
+    static {
+        initRedisPool();
+    }
+
     /**
      * init a redis connection pool with configuration assigned in constants
      */
