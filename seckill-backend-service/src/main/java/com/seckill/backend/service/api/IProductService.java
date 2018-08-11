@@ -8,7 +8,7 @@ import java.util.List;
  * @Date: 2018/8/4_1:43 AM
  */
 public interface IProductService {
-    ProductInfo queryProductInfo(String productName);
+    ProductInfo queryProductInfo(long productId);
 
-    List<ProductInfo> queryProductInfo(List<String> productNames);
+    List<ProductInfo> queryProductInfo(List<Long> productIds);
 }

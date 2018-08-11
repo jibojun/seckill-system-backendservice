@@ -13,14 +13,14 @@ import java.util.List;
  */
 @Service(timeout = 1500, retries = 3)
 public class ProductServiceImpl implements IProductService {
+
     @Override
-    public ProductInfo queryProductInfo(String productName) {
+    public ProductInfo queryProductInfo(long productId) {
         return null;
     }
 
     @Override
-    public List<ProductInfo> queryProductInfo(List<String> productNames) {
+    public List<ProductInfo> queryProductInfo(List<Long> productIds) {
         return null;
     }
-
 }
