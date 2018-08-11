@@ -1,7 +1,7 @@
 package com.seckill.backend.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.seckill.backend.common.entity.ProductInfo;
+import com.seckill.backend.service.api.ProductInfo;
 import com.seckill.backend.service.api.IProductService;
 
 import java.util.List;

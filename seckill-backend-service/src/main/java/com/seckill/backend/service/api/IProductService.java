@@ -1,7 +1,5 @@
 package com.seckill.backend.service.api;
 
-import com.seckill.backend.common.entity.ProductInfo;
-
 import java.util.List;
 
 /**

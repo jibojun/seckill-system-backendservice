@@ -4,7 +4,7 @@ import com.alicp.jetcache.Cache;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
 import com.seckill.backend.common.entity.OrderInfo;
-import com.seckill.backend.common.entity.ProductInfo;
+import com.seckill.backend.service.api.ProductInfo;
 import com.seckill.backend.common.logger.LogUtil;
 import org.springframework.stereotype.Component;
 

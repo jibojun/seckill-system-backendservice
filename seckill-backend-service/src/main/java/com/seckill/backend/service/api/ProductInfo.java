@@ -1,4 +1,4 @@
-package com.seckill.backend.common.entity;
+package com.seckill.backend.service.api;
 
 import java.math.BigDecimal;
 
