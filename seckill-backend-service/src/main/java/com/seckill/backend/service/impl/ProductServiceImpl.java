@@ -3,6 +3,8 @@ package com.seckill.backend.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.seckill.backend.service.api.ProductInfo;
 import com.seckill.backend.service.api.IProductService;
+import com.seckill.backend.service.cache.CacheManager;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -13,6 +15,9 @@ import java.util.List;
  */
 @Service(timeout = 1500, retries = 3)
 public class ProductServiceImpl implements IProductService {
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @Override
     public ProductInfo queryProductInfo(long productId) {
