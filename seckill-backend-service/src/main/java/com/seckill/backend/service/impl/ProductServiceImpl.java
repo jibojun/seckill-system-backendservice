@@ -33,17 +33,21 @@ public class ProductServiceImpl implements IProductService {
                 lock.unlock();
             } else {
                 //no lock, wait, try read cache again when it's updated
+                Long timeOutMillis=System.currentTimeMillis()+5;
                 while (lock.isLocked()) {
-
+                    //wait 5s, otherwise, return null for timeout
+                    if(System.currentTimeMillis()>=timeOutMillis){
+                        LogUtil.logInfo(this.getClass(), String.format("product: %s, waiting for update cache time out", productId));
+                        return null;
+                    }
                 }
-                return cacheManager.getProductCache(productId);
             }
+            return cacheManager.getProductCache(productId);
         } else {
             //cache existed, return directly
             LogUtil.logInfo(this.getClass(), String.format("product: %s, hit cache, data is: %s", productId, cachedProductInfo));
             return cachedProductInfo;
         }
-        return null;
     }
 
     @Override
