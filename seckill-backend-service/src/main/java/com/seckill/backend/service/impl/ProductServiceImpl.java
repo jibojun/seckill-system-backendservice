@@ -1,6 +1,8 @@
 package com.seckill.backend.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.seckill.backend.common.lock.RedisDistributionLock;
+import com.seckill.backend.common.logger.LogUtil;
 import com.seckill.backend.service.api.ProductInfo;
 import com.seckill.backend.service.api.IProductService;
 import com.seckill.backend.service.cache.CacheManager;
@@ -19,8 +21,28 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private CacheManager cacheManager;
 
+    private RedisDistributionLock lock = new RedisDistributionLock("getProductInfo", 15L);
+
     @Override
     public ProductInfo queryProductInfo(long productId) {
+        ProductInfo cachedProductInfo = cacheManager.getProductCache(productId);
+        if (cachedProductInfo == null) {
+            //no cache, using distribution lock to let only 1 thread to query DB and update cache
+            if (lock.tryLock()) {
+                //TODO:got lock, query DB and update cache, unlock finally when operation finished
+                lock.unlock();
+            } else {
+                //no lock, wait, try read cache again when it's updated
+                while (lock.isLocked()) {
+
+                }
+                return cacheManager.getProductCache(productId);
+            }
+        } else {
+            //cache existed, return directly
+            LogUtil.logInfo(this.getClass(), String.format("product: %s, hit cache, data is: %s", productId, cachedProductInfo));
+            return cachedProductInfo;
+        }
         return null;
     }
 
