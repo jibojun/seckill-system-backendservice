@@ -3,6 +3,8 @@ package com.seckill.backend.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.seckill.backend.common.lock.RedisDistributionLock;
 import com.seckill.backend.common.logger.LogUtil;
+import com.seckill.backend.dao.entity.Product;
+import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.ProductInfo;
 import com.seckill.backend.service.api.IProductService;
 import com.seckill.backend.service.cache.CacheManager;
@@ -21,6 +23,9 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    private ProductDao productDao;
+
     private RedisDistributionLock lock = new RedisDistributionLock("getProductInfo", 15L);
 
     @Override
@@ -30,13 +35,14 @@ public class ProductServiceImpl implements IProductService {
             //no cache, using distribution lock to let only 1 thread to query DB and update cache
             if (lock.tryLock()) {
                 //TODO:got lock, query DB and update cache, unlock finally when operation finished
+                Product dbResult = productDao.queryProductByPk(productId);
                 lock.unlock();
             } else {
                 //no lock, wait, try read cache again when it's updated
-                Long timeOutMillis=System.currentTimeMillis()+5;
+                Long timeOutMillis = System.currentTimeMillis() + 3;
                 while (lock.isLocked()) {
                     //wait 5s, otherwise, return null for timeout
-                    if(System.currentTimeMillis()>=timeOutMillis){
+                    if (System.currentTimeMillis() >= timeOutMillis) {
                         LogUtil.logInfo(this.getClass(), String.format("product: %s, waiting for update cache time out", productId));
                         return null;
                     }
