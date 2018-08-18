@@ -36,6 +36,8 @@ public class ProductServiceImpl implements IProductService {
             if (lock.tryLock()) {
                 //TODO:got lock, query DB and update cache, unlock finally when operation finished
                 Product dbResult = productDao.queryProductByPk(productId);
+                ProductInfo tmpProductInfo=new ProductInfo(dbResult.getProductId(),dbResult.getProductName(),dbResult.getPrice(),dbResult.getAmount());
+                cacheManager.putProductCache(tmpProductInfo);
                 lock.unlock();
             } else {
                 //no lock, wait, try read cache again when it's updated

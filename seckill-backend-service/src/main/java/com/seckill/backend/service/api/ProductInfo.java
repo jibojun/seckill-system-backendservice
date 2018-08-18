@@ -16,6 +16,14 @@ public class ProductInfo {
 
     private int productAmount;
 
+    public ProductInfo(long productId, String productName, BigDecimal productPrice, int productAmount) {
+        this.productId = productId;
+        this.productName = productName;
+        this.productPrice = productPrice;
+        this.productAmount = productAmount;
+    }
+
+
     public long getProductId() {
         return productId;
     }
