@@ -13,6 +13,7 @@ public class Order {
     private long productId;
     private long productNumbers;
     private BigDecimal orderAmount;
+    private boolean isSuccess;
     private Calendar orderDate;
 
     public long getOrderId() {
@@ -53,5 +54,13 @@ public class Order {
 
     public void setOrderDate(Calendar orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
     }
 }
