@@ -11,7 +11,7 @@ import java.util.Collection;
  * @Description: db sharding
  * @Date: 2018/8/3_12:12 AM
  */
-public class DBSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
+public class DBOrderSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
     /**
      * equal, db sharding
      *
