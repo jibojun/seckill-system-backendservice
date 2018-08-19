@@ -13,7 +13,7 @@ import java.util.Collection;
  */
 public class DBSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
     /**
-     * equal, sharding with uid
+     * equal, db sharding
      *
      * @param collection
      * @param shardingValue
@@ -21,8 +21,8 @@ public class DBSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
      */
     @Override
     public String doEqualSharding(Collection<String> collection, ShardingValue<Integer> shardingValue) {
-        int uid = shardingValue.getValue();
-        int index = uid % CommonConstants.DB_SHARDING_NUMBER;
+        int id = shardingValue.getValue();
+        int index = id % CommonConstants.DB_SHARDING_NUMBER;
         for (String item : collection) {
             if (item.endsWith(index + "")) {
                 return item;
