@@ -31,16 +31,16 @@ public class DataSourceConfig {
         dataSourceMap.put("dataSource_2", createDS("dataSource_2"));
         //ds rule, default ds
         DataSourceRule dataSourceRule = new DataSourceRule(dataSourceMap, "dataSource_1");
-        //table rule,map physical tables to logical table, can select from logical table
-        TableRule orderTableRule = TableRule.builder("order_logical")
-                .actualTables(Arrays.asList("order_1", "order_2"))
-                .dataSourceRule(dataSourceRule)
-                .build();
+//        //table rule,map physical tables to logical table, can select from logical table
+//        TableRule orderTableRule = TableRule.builder("order_logical")
+//                .actualTables(Arrays.asList("order_1", "order_2"))
+//                .dataSourceRule(dataSourceRule)
+//                .build();
 
         //DB, table sharding rules
         ShardingRule shardingRule = ShardingRule.builder()
                 .dataSourceRule(dataSourceRule)
-                .tableRules(Arrays.asList(orderTableRule))
+//                .tableRules(Arrays.asList(orderTableRule))
                 .databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new DBSharding())).build();
 
         return ShardingDataSourceFactory.createDataSource(shardingRule);
