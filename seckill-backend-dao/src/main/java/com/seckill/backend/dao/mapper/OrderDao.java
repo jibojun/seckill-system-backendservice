@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface OrderDao {
     Order queryByPk(@Param("orderId") long orderId);
+
     List<Order> batchQueryByPk(List<Long> orderIds);
+
     int insert(Order order);
 }
