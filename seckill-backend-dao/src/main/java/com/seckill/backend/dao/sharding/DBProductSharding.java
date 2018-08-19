@@ -2,6 +2,7 @@ package com.seckill.backend.dao.sharding;
 
 import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.database.SingleKeyDatabaseShardingAlgorithm;
+import com.seckill.backend.common.constants.CommonConstants;
 
 import java.util.Collection;
 
@@ -13,7 +14,14 @@ import java.util.Collection;
 public class DBProductSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
     @Override
     public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
-        return null;
+        int productId = shardingValue.getValue();
+        int index = productId % CommonConstants.DB_SHARDING_NUMBER;
+        for (String item : availableTargetNames) {
+            if (item.endsWith(index + "")) {
+                return item;
+            }
+        }
+        throw new UnsupportedOperationException();
     }
 
     @Override

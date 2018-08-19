@@ -21,8 +21,8 @@ public class DBOrderSharding implements SingleKeyDatabaseShardingAlgorithm<Integ
      */
     @Override
     public String doEqualSharding(Collection<String> collection, ShardingValue<Integer> shardingValue) {
-        int id = shardingValue.getValue();
-        int index = id % CommonConstants.DB_SHARDING_NUMBER;
+        int orderId = shardingValue.getValue();
+        int index = orderId % CommonConstants.DB_SHARDING_NUMBER;
         for (String item : collection) {
             if (item.endsWith(index + "")) {
                 return item;
