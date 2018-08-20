@@ -12,7 +12,7 @@ import java.util.List;
  * @Date: 2018/8/18_5:57 PM
  */
 public interface OrderDao {
-    List<Order> queryByPk(@Param("orderId") long orderId);
+    List<Order> queryByPk(@Param("orderId") int orderId);
 
     int insert(Order order);
 }
