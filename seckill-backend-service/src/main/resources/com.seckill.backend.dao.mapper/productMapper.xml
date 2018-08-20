@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper namespace="com.seckill.backend.dao.mapper.ProductDao">
+    <resultMap id="resultMap" type="com.seckill.backend.dao.entity.Product" >
+        <id column="product_id" property="productId" jdbcType="INTEGER" />
+        <result column="product_name" property="productName" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="amount" property="amount" jdbcType="INTEGER" />
+        <result column="update_time" property="updateTime" jdbcType="DATETIME" />
+    </resultMap>
+    
+    <select id="queryProductByPk">
+        select * from product where product_id=#{productId}
+    </select>
+    
+    <select id="queryProductByName">
+        select * from product where product_name=#{productName}
+    </select>
+    
+    <update id="updateProduct"></update>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.seckill.backend.dao.entity;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 
 /**
  * @Author: Bojun Ji
@@ -15,6 +16,8 @@ public class Product {
     private BigDecimal price;
 
     private int amount;
+
+    private Calendar updateTime;
 
     public BigDecimal getPrice() {
         return price;
@@ -46,5 +49,13 @@ public class Product {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public Calendar getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Calendar updateTime) {
+        this.updateTime = updateTime;
     }
 }
