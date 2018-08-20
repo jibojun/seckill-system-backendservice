@@ -9,36 +9,12 @@ import java.util.Calendar;
  * @Date: 2018/8/18_5:47 PM
  */
 public class Order {
-    private long orderId;
-    private long productId;
-    private long productNumbers;
+    private int orderId;
+    private int productId;
+    private int productNumbers;
     private BigDecimal orderAmount;
     private boolean isSuccess;
     private Calendar orderDate;
-
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
-    public long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(long productId) {
-        this.productId = productId;
-    }
-
-    public long getProductNumbers() {
-        return productNumbers;
-    }
-
-    public void setProductNumbers(long productNumbers) {
-        this.productNumbers = productNumbers;
-    }
 
     public BigDecimal getOrderAmount() {
         return orderAmount;
@@ -62,5 +38,29 @@ public class Order {
 
     public void setSuccess(boolean success) {
         isSuccess = success;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public int getProductNumbers() {
+        return productNumbers;
+    }
+
+    public void setProductNumbers(int productNumbers) {
+        this.productNumbers = productNumbers;
     }
 }
