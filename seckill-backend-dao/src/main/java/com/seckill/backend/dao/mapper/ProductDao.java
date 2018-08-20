@@ -11,11 +11,9 @@ import java.util.List;
  * @Date: 2018/8/18_5:57 PM
  */
 public interface ProductDao {
-    Product queryProductByPk(@Param("productId") long productId);
+    List<Product> queryProductByPk(@Param("productId") long productId);
 
     List<Product> queryProductByName(String productName);
-
-    List<Product> queryAllProducts();
 
     int updateProduct(Product product);
 }

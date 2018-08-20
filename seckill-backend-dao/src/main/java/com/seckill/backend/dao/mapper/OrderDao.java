@@ -5,13 +5,14 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+
 /**
  * @Author: Bojun Ji
  * @Description:
  * @Date: 2018/8/18_5:57 PM
  */
 public interface OrderDao {
-    Order queryByPk(@Param("orderId") long orderId);
+    List<Order> queryByPk(@Param("orderId") long orderId);
 
     int insert(Order order);
 }

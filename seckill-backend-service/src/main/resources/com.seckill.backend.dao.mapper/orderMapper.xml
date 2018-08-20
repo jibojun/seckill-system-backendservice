@@ -11,7 +11,7 @@
     </resultMap>
 
     <select id="queryByPk" resultMap="resultMap">
-
+      select * from order where order_id=#{orderId}
     </select>
 
     <insert id="insert">

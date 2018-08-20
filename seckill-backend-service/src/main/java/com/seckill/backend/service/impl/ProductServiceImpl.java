@@ -34,10 +34,15 @@ public class ProductServiceImpl implements IProductService {
         if (cachedProductInfo == null) {
             //no cache, using distribution lock to let only 1 thread to query DB and update cache
             if (lock.tryLock()) {
-                //TODO:got lock, query DB and update cache, unlock finally when operation finished
-                Product dbResult = productDao.queryProductByPk(productId);
-                ProductInfo tmpProductInfo=new ProductInfo(dbResult.getProductId(),dbResult.getProductName(),dbResult.getPrice(),dbResult.getAmount());
-                cacheManager.putProductCache(tmpProductInfo);
+                List<Product> dbResultList = productDao.queryProductByPk(productId);
+                if (dbResultList != null && !dbResultList.isEmpty()) {
+                    Product dbResult = dbResultList.get(0);
+                    ProductInfo tmpProductInfo = new ProductInfo(dbResult.getProductId(), dbResult.getProductName(), dbResult.getPrice(), dbResult.getAmount());
+                    cacheManager.putProductCache(tmpProductInfo);
+                    LogUtil.logInfo(this.getClass(), String.format("product: %s, got db result and put in cache, db result: %s", productId, dbResult));
+                } else {
+                    LogUtil.logError(this.getClass(), String.format("product: %s, no result in DB!", productId));
+                }
                 lock.unlock();
             } else {
                 //no lock, wait, try read cache again when it's updated
