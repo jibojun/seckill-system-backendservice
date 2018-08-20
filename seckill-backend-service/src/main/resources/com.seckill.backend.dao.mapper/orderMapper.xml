@@ -10,6 +10,12 @@
         <result column="order_date" property="orderDate" jdbcType="DATETIME" />
     </resultMap>
 
+    <select id="queryByPk" resultMap="resultMap">
 
+    </select>
+
+    <insert id="insert">
+        insert into order (order_id,product_id,product_numbers,order_amount,is_success,order_date) values (#{orderId},#{productId},#{productNumbers},#{orderAmount},#{isSuccess},#{orderDate})
+    </insert>
 
 </mapper>
