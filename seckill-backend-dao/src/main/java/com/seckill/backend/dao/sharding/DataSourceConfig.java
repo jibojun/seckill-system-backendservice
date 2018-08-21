@@ -32,18 +32,21 @@ public class DataSourceConfig {
         //ds rule, default ds
         DataSourceRule dataSourceRule = new DataSourceRule(dataSourceMap, "dataSource1");
 
-        //order table's DB sharding rule
+        //table's DB sharding rule
         List<String> orderActualTables = new ArrayList<>();
         orderActualTables.add("order");
         TableRule orderDbShardingRule = TableRule.builder("t_order").actualTables(orderActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new DBOrderSharding())).dataSourceRule(dataSourceRule).build();
         List<String> productActualTables = new ArrayList<>();
         productActualTables.add("product");
         TableRule productDbShardingRule = TableRule.builder("t_product").actualTables(productActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("product_id", new DBProductSharding())).dataSourceRule(dataSourceRule).build();;
+        List<TableRule> tableRuleList=new ArrayList<>();
+        tableRuleList.add(orderDbShardingRule);
+        tableRuleList.add(productDbShardingRule);
 
         //sharding rule
         ShardingRule shardingRule = ShardingRule.builder()
                 .dataSourceRule(dataSourceRule)
-                .tableRules()
+                .tableRules(tableRuleList)
                 .databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new DBOrderSharding())).build();
 
         return ShardingDataSourceFactory.createDataSource(shardingRule);
@@ -55,6 +58,10 @@ public class DataSourceConfig {
         dataSource.setUrl(String.format("jdbc:mysql://127.0.0.1:3306/%s", dataSourceName));
         dataSource.setUsername("");
         dataSource.setPassword("");
+        dataSource.setInitialSize(0);
+        dataSource.setMaxActive(20);
+        dataSource.setMinIdle(0);
+        dataSource.setMaxWait(60000);
         return dataSource;
     }
 
