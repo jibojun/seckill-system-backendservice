@@ -15,9 +15,6 @@
     <dubbo:protocol port="20880" name="dubbo"/>
     <dubbo:annotation package="com.seckill.backend.service.impl"/>
 
-    <!--sql-->
-    <context:property-placeholder location="classpath*:db.properties"/>
-
     <!--mybatis mapper scan-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.seckill.backend.dao.mapper"/>
