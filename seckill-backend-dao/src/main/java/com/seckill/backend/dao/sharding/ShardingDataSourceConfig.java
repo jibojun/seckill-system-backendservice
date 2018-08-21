@@ -23,7 +23,7 @@ import java.util.Map;
  * @Date: 2018/8/3_12:39 AM
  */
 @Configuration
-public class DataSourceConfig {
+public class ShardingDataSourceConfig {
     @Bean(name="shardingDataSource")
     public DataSource getDataSource() throws SQLException {
         Map<String, DataSource> dataSourceMap = new HashMap<>(2);
@@ -35,10 +35,10 @@ public class DataSourceConfig {
         //table's DB sharding rule
         List<String> orderActualTables = new ArrayList<>();
         orderActualTables.add("order");
-        TableRule orderDbShardingRule = TableRule.builder("t_order").actualTables(orderActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new DBOrderSharding())).dataSourceRule(dataSourceRule).build();
+        TableRule orderDbShardingRule = TableRule.builder("t_order").actualTables(orderActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new OrderDbSharding())).dataSourceRule(dataSourceRule).build();
         List<String> productActualTables = new ArrayList<>();
         productActualTables.add("product");
-        TableRule productDbShardingRule = TableRule.builder("t_product").actualTables(productActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("product_id", new DBProductSharding())).dataSourceRule(dataSourceRule).build();;
+        TableRule productDbShardingRule = TableRule.builder("t_product").actualTables(productActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("product_id", new ProductDbSharding())).dataSourceRule(dataSourceRule).build();;
         List<TableRule> tableRuleList=new ArrayList<>();
         tableRuleList.add(orderDbShardingRule);
         tableRuleList.add(productDbShardingRule);
@@ -47,7 +47,7 @@ public class DataSourceConfig {
         ShardingRule shardingRule = ShardingRule.builder()
                 .dataSourceRule(dataSourceRule)
                 .tableRules(tableRuleList)
-                .databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new DBOrderSharding())).build();
+                .databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new OrderDbSharding())).build();
 
         return ShardingDataSourceFactory.createDataSource(shardingRule);
     }

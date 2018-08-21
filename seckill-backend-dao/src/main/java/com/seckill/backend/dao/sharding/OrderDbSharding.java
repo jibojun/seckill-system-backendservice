@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
  * @Description: db sharding
  * @Date: 2018/8/3_12:12 AM
  */
-public class DBOrderSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
+public class OrderDbSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
     /**
      * equal, db sharding
      *

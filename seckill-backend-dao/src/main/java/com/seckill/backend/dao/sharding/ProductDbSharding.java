@@ -13,7 +13,7 @@ import java.util.LinkedHashSet;
  * @Description:
  * @Date: 2018/8/19_6:18 PM
  */
-public class DBProductSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
+public class ProductDbSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
     @Override
     public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
         int productId = shardingValue.getValue();
