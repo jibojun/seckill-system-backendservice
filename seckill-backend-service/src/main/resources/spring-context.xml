@@ -19,6 +19,28 @@
     <mybatis:scan base-package="com.seckill.backend.dao" />
     <context:property-placeholder location="classpath*:db.properties" />
 
+    <bean name="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc_url1}" />
+        <property name="username" value="${jdbc_username1}" />
+        <property name="password" value="${jdbc_password01" />
+        <property name="driverClassName" value="${jdbc_driver}" />
+        <property name="initialSize" value="0" />
+        <property name="maxActive" value="20" />
+        <property name="minIdle" value="0" />
+        <property name="maxWait" value="60000" />
+        <property name="validationQuery" value="${validationQuery}" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <property name="filters" value="stat" />
+    </bean>
+
+
     <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="datasource"></property>
     </bean>
