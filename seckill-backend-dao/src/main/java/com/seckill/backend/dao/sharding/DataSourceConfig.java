@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.dangdang.ddframe.rdb.sharding.api.ShardingDataSourceFactory;
 import com.dangdang.ddframe.rdb.sharding.api.rule.DataSourceRule;
 import com.dangdang.ddframe.rdb.sharding.api.rule.ShardingRule;
+import com.dangdang.ddframe.rdb.sharding.api.rule.TableRule;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.database.DatabaseShardingStrategy;
 import com.mysql.cj.jdbc.Driver;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +12,9 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,9 +32,18 @@ public class DataSourceConfig {
         //ds rule, default ds
         DataSourceRule dataSourceRule = new DataSourceRule(dataSourceMap, "dataSource1");
 
-        //table's DB sharding rules
+        //order table's DB sharding rule
+        List<String> orderActualTables = new ArrayList<>();
+        orderActualTables.add("order");
+        TableRule orderDbShardingRule = TableRule.builder("t_order").actualTables(orderActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new DBOrderSharding())).dataSourceRule(dataSourceRule).build();
+        List<String> productActualTables = new ArrayList<>();
+        productActualTables.add("product");
+        TableRule productDbShardingRule = TableRule.builder("t_product").actualTables(productActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("product_id", new DBProductSharding())).dataSourceRule(dataSourceRule).build();;
+
+        //sharding rule
         ShardingRule shardingRule = ShardingRule.builder()
                 .dataSourceRule(dataSourceRule)
+                .tableRules()
                 .databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new DBOrderSharding())).build();
 
         return ShardingDataSourceFactory.createDataSource(shardingRule);
