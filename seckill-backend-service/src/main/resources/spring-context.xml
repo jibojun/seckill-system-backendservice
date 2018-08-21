@@ -22,7 +22,28 @@
     <bean name="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc_url1}" />
         <property name="username" value="${jdbc_username1}" />
-        <property name="password" value="${jdbc_password01" />
+        <property name="password" value="${jdbc_password1}" />
+        <property name="driverClassName" value="${jdbc_driver}" />
+        <property name="initialSize" value="0" />
+        <property name="maxActive" value="20" />
+        <property name="minIdle" value="0" />
+        <property name="maxWait" value="60000" />
+        <property name="validationQuery" value="${validationQuery}" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <property name="filters" value="stat" />
+    </bean>
+
+    <bean name="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc_url2}" />
+        <property name="username" value="${jdbc_username2}" />
+        <property name="password" value="${jdbc_password2}" />
         <property name="driverClassName" value="${jdbc_driver}" />
         <property name="initialSize" value="0" />
         <property name="maxActive" value="20" />
