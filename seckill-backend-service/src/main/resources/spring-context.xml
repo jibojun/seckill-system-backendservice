@@ -19,6 +19,7 @@
     <mybatis:scan base-package="com.seckill.backend.dao" />
     <context:property-placeholder location="classpath*:db.properties" />
 
+    <!--2 data sources-->
     <bean name="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="${jdbc_url1}" />
         <property name="username" value="${jdbc_username1}" />
@@ -61,16 +62,28 @@
         <property name="filters" value="stat" />
     </bean>
 
+    <!--dao mapper location-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.seckill.backend.dao.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
-
+    <!--sql session factory-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="shardingDataSource"/>
         <property name="mapperLocations" value="classpath*:com.seckill.backend.dao.mapper/*Mapper.xml"/>
     </bean>
+
+    <!--data source KV mapping-->
+    <bean id="dataSourceRule" class="com.dangdang.ddframe.rdb.sharding.api.rule.DataSourceRule">
+        <constructor-arg>
+            <map>
+                <entry key="0" value-ref="dataSource1"/>
+                <entry key="1" value-ref="dataSource2"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
 
 
 
