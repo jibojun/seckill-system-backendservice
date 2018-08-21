@@ -16,13 +16,13 @@
     <dubbo:annotation package="com.seckill.backend.service.impl"/>
 
     <!--sql-->
-    <mybatis:scan base-package="com.seckill.backend.dao" />
-    <context:property-placeholder location="classpath*:db.properties" />
+    <mybatis:scan base-package="com.seckill.backend.dao"/>
+    <context:property-placeholder location="classpath*:db.properties"/>
 
     <!--transaction manager-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="shardingDataSource"></property>
     </bean>
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven/>
 
 </beans>
