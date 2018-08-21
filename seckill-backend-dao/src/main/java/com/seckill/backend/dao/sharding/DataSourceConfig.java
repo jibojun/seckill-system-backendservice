@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Configuration
 public class DataSourceConfig {
-    @Bean
+    @Bean(name="shardingDataSource")
     public DataSource getDataSource() throws SQLException {
         Map<String, DataSource> dataSourceMap = new HashMap<>(2);
         dataSourceMap.put("dataSource_0", createDS("dataSource1"));
