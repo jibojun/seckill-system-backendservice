@@ -16,8 +16,19 @@
     <dubbo:annotation package="com.seckill.backend.service.impl"/>
 
     <!--sql-->
-    <mybatis:scan base-package="com.seckill.backend.dao"/>
     <context:property-placeholder location="classpath*:db.properties"/>
+
+    <!--mybatis mapper scan-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.seckill.backend.dao.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!--sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="shardingDataSource"/>
+        <property name="mapperLocations" value="classpath*:com.seckill.backend.dao.mapper/*Mapper.xml"/>
+    </bean>
 
     <!--transaction manager-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
