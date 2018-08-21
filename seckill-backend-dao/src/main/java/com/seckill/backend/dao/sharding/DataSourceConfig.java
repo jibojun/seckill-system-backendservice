@@ -24,20 +24,14 @@ public class DataSourceConfig {
     @Bean
     public DataSource getDataSource() throws SQLException {
         Map<String, DataSource> dataSourceMap = new HashMap<>(2);
-        dataSourceMap.put("dataSource_1", createDS("dataSource_1"));
-        dataSourceMap.put("dataSource_2", createDS("dataSource_2"));
+        dataSourceMap.put("dataSource_0", createDS("dataSource1"));
+        dataSourceMap.put("dataSource_1", createDS("dataSource2"));
         //ds rule, default ds
-        DataSourceRule dataSourceRule = new DataSourceRule(dataSourceMap, "dataSource_1");
-//        //table rule,map physical tables to logical table, can select from logical table
-//        TableRule orderTableRule = TableRule.builder("order_logical")
-//                .actualTables(Arrays.asList("order_1", "order_2"))
-//                .dataSourceRule(dataSourceRule)
-//                .build();
+        DataSourceRule dataSourceRule = new DataSourceRule(dataSourceMap, "dataSource1");
 
-        //DB, table sharding rules
+        //table's DB sharding rules
         ShardingRule shardingRule = ShardingRule.builder()
                 .dataSourceRule(dataSourceRule)
-//                .tableRules(Arrays.asList(orderTableRule))
                 .databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new DBOrderSharding())).build();
 
         return ShardingDataSourceFactory.createDataSource(shardingRule);
