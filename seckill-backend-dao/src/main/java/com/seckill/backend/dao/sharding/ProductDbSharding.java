@@ -10,7 +10,7 @@ import java.util.LinkedHashSet;
 
 /**
  * @Author: Bojun Ji
- * @Description:
+ * @Description: db sharding of product table
  * @Date: 2018/8/19_6:18 PM
  */
 public class ProductDbSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
