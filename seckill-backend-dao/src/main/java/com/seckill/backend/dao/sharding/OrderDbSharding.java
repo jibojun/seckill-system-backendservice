@@ -10,7 +10,7 @@ import java.util.LinkedHashSet;
 
 /**
  * @Author: Bojun Ji
- * @Description: db sharding
+ * @Description: db sharding of order table
  * @Date: 2018/8/3_12:12 AM
  */
 public class OrderDbSharding implements SingleKeyDatabaseShardingAlgorithm<Integer> {
