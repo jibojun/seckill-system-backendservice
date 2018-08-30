@@ -11,5 +11,5 @@ import java.util.HashMap;
  */
 public class MqProducer {
     //TODO: producer,send message with DB request
-    KafkaProducer<String, String> producer = new KafkaProducer(new HashMap<>());
+    KafkaProducer producer = new KafkaProducer(new HashMap<>());
 }
