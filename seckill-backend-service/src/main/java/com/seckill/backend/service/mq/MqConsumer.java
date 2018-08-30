@@ -11,5 +11,5 @@ import java.util.HashMap;
  */
 public class MqConsumer {
     //TODO: mq consumer,get submitted order from high level system
-    KafkaConsumer<String, String> consumer = new KafkaConsumer(new HashMap<>());
+    KafkaConsumer consumer = new KafkaConsumer(new HashMap<>());
 }
