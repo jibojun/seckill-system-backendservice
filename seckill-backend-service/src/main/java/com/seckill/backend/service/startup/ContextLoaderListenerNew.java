@@ -18,7 +18,7 @@ public class ContextLoaderListenerNew extends ContextLoaderListener {
     public void contextInitialized(ServletContextEvent event) {
         //run spring context loader listener's initialization function
         super.contextInitialized(event);
-        //TODO: load cache from DB
+        //TODO: load product cache from DB
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
         context.getBean("productDao",ProductDao.class);
     }
