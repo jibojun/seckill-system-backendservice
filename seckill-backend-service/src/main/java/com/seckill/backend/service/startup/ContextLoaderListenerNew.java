@@ -20,6 +20,6 @@ public class ContextLoaderListenerNew extends ContextLoaderListener {
         super.contextInitialized(event);
         //TODO: load product cache from DB
         ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
-        context.getBean("productDao",ProductDao.class);
+        context.getBean("productDao",ProductDao.class); 
     }
 }
