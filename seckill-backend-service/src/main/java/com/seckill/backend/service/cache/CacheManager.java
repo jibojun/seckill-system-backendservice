@@ -57,7 +57,7 @@ public class CacheManager {
     }
 
     public void putOrderCache(OrderInfo orderInfo) {
-        LogUtil.logInfo(CacheManager.class, String.format("put order cache: %s" + orderInfo));
+        LogUtil.logInfo(CacheManager.class, String.format("put order cache: %s", orderInfo));
         orderCache.put(orderInfo.getOrderId(), orderInfo);
     }
 
