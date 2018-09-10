@@ -1,6 +1,7 @@
 package com.seckill.backend.service.impl;
 
 import com.seckill.backend.common.entity.OrderInfo;
+import com.seckill.backend.dao.mapper.OrderDao;
 import com.seckill.backend.service.api.IOrderService;
 import com.seckill.backend.service.cache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OrderServiceImpl implements IOrderService {
     @Autowired
     private CacheManager cacheManager;
+
+    @Autowired
+    private OrderDao orderDao;
+
+
 
 
     @Override
