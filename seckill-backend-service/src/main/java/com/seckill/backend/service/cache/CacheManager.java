@@ -62,7 +62,7 @@ public class CacheManager {
     }
 
     public void putProductCache(ProductInfo productInfo) {
-        LogUtil.logInfo(CacheManager.class, String.format("put product cache: %s" + productInfo));
+        LogUtil.logInfo(CacheManager.class, String.format("put product cache: %s", productInfo));
         productCache.put(productInfo.getProductId(), productInfo);
     }
 }
