@@ -34,7 +34,7 @@ public class ProductServiceImpl implements IProductService {
         if (cachedProductInfo == null) {
             //no cache, using distribution lock to let only 1 thread to query DB and update cache
             if (lock.tryLock()) {
-                List<Product> dbResultList = productDao.queryProductByPk(productId);
+                List<Product> dbResultList = productDao.queryProductByPk((int) productId);
                 if (dbResultList != null && !dbResultList.isEmpty()) {
                     Product dbResult = dbResultList.get(0);
                     ProductInfo tmpProductInfo = new ProductInfo(dbResult.getProductId(), dbResult.getProductName(), dbResult.getPrice(), dbResult.getAmount());
