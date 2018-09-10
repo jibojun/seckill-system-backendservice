@@ -2,6 +2,7 @@ package com.seckill.backend.service.impl;
 
 import com.seckill.backend.common.entity.OrderInfo;
 import com.seckill.backend.dao.mapper.OrderDao;
+import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.IOrderService;
 import com.seckill.backend.service.cache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private OrderDao orderDao;
 
-
+    @Autowired
+    private ProductDao productDao;
 
 
     @Override
@@ -28,7 +30,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public OrderInfo queryOrder(long orderId) {
-        OrderInfo orderInfo=cacheManager.getOrderCache(orderId);
+        OrderInfo orderInfo = cacheManager.getOrderCache(orderId);
         //TODO, distribution lock, only 1 thread to get data from DB and update cache
         return orderInfo;
     }
