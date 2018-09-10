@@ -53,6 +53,7 @@ public class JetCacheConfig {
     }
 
     @Bean
+    @SuppressWarnings("unchecked")
     public GlobalCacheConfig config(SpringConfigProvider configProvider) {
         //local cache, caffeine
         Map localBuilders = new HashMap();
