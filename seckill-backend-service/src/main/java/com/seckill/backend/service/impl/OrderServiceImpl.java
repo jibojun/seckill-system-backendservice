@@ -1,6 +1,6 @@
 package com.seckill.backend.service.impl;
 
-import com.seckill.backend.common.entity.OrderInfo;
+import com.alibaba.dubbo.config.annotation.Service;
 import com.seckill.backend.dao.mapper.OrderDao;
 import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.IOrderService;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Description:
  * @Date: 2018/8/4_2:28 AM
  */
+@Service(timeout = 1500, retries = 3)
 public class OrderServiceImpl implements IOrderService {
     @Autowired
     private CacheManager cacheManager;
@@ -24,14 +25,7 @@ public class OrderServiceImpl implements IOrderService {
 
 
     @Override
-    public void submitOrder(long orderId) {
-
-    }
-
-    @Override
-    public OrderInfo queryOrder(long orderId) {
-        OrderInfo orderInfo = cacheManager.getOrderCache(orderId);
-        //TODO, distribution lock, only 1 thread to get data from DB and update cache
-        return orderInfo;
+    public boolean orderCheck(String itemId, int buyNumber) {
+        return false;
     }
 }

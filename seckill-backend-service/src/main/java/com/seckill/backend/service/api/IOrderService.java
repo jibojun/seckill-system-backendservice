@@ -7,5 +7,5 @@ package com.seckill.backend.service.api;
  * @Date: 2018/8/4_2:26 AM
  */
 public interface IOrderService {
-    boolean orderCheck(long orderId);
+    boolean orderCheck(String itemId, int buyNumber);
 }
