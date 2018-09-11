@@ -24,6 +24,13 @@ public class OrderServiceImpl implements IOrderService {
     private ProductDao productDao;
 
 
+    /**
+     * check product number in redis, by decr, when there is no amount, means seckill is failed
+     *
+     * @param itemId
+     * @param buyNumber
+     * @return
+     */
     @Override
     public boolean orderCheck(String itemId, int buyNumber) {
         return false;
