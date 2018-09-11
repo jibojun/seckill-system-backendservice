@@ -9,6 +9,10 @@
         <result column="update_time" property="updateTime" jdbcType="DATETIME"/>
     </resultMap>
 
+    <select id="queryAllProducts" resultMap="resultMap">
+        select * from product
+    </select>
+
     <select id="queryProductByPk" parameterType="Integer" resultMap="resultMap">
         select * from product where product_id=#{productId}
     </select>
