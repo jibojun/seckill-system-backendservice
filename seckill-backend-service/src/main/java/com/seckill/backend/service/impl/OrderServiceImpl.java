@@ -1,11 +1,13 @@
 package com.seckill.backend.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.seckill.backend.common.lock.RedisPool;
 import com.seckill.backend.dao.mapper.OrderDao;
 import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.IOrderService;
 import com.seckill.backend.service.cache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import redis.clients.jedis.Jedis;
 
 /**
  * @Author: Bojun Ji
@@ -14,14 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Service(timeout = 1500, retries = 3)
 public class OrderServiceImpl implements IOrderService {
-    @Autowired
-    private CacheManager cacheManager;
 
     @Autowired
     private OrderDao orderDao;
 
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private CacheManager cacheManager;
 
 
     /**
@@ -32,7 +35,8 @@ public class OrderServiceImpl implements IOrderService {
      * @return
      */
     @Override
-    public boolean orderCheck(String itemId, int buyNumber) {
+    public boolean createOrder(String itemId, int buyNumber) {
+        Jedis jedis = RedisPool.getConnResource();
         return false;
     }
 }
