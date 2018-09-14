@@ -26,4 +26,8 @@ public class RedisConstants {
 
     public static final boolean REDIS_BLOCK_WHEN_EXHAUSTED = true;
 
+    public static final String PRODUCT_KEY_PREFIX = "product@";
+
+    public static final String ORDER_KEY_PREFIX = "order@";
+
 }
