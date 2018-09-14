@@ -6,7 +6,7 @@
 
     <listener>
         <listener-class>
-            com.seckill.backend.service.startup.ContextLoaderListenerNew
+            com.seckill.backend.service.startup.CustomContextLoaderListener
         </listener-class>
     </listener>
 

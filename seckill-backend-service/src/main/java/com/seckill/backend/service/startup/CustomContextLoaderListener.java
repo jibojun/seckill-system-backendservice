@@ -19,7 +19,7 @@ import java.util.List;
  * @Description: load cache when start up
  * @Date: 2018/8/4_2:24 AM
  */
-public class ContextLoaderListenerNew extends ContextLoaderListener {
+public class CustomContextLoaderListener extends ContextLoaderListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
