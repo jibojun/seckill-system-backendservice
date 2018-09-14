@@ -1,9 +1,12 @@
 package com.seckill.backend.service.mq;
 
+import com.seckill.backend.common.logger.LogUtil;
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -13,25 +16,42 @@ import java.util.Properties;
  */
 @Component
 public class OrderProducer {
-    //TODO: send message, async, create order in DB
-    KafkaProducer producer = new KafkaProducer(new HashMap<>());
-    private Properties properties;
+    @Autowired
+    private ProducerListenser producerListenser;
 
-    public void initProducerConfig() {
-        if (properties == null) {
-            synchronized (this) {
-                if (properties == null) {
-                    properties = new Properties();
-                    properties.put("bootstrap.servers", "127.0.0.1:9092");
-                    properties.put("acks", "all");
-                    properties.put("retries", 3);
-                    properties.put("buffer.memory", 33554432);
-                    properties.put("key.serializer",
-                            "org.apache.kafka.common.serialization.StringSerializer");
-                    properties.put("value.serializer",
-                            "org.apache.kafka.common.serialization.StringSerializer");
-                }
+    private static Properties properties;
+
+    static {
+        initProducerConfig();
+        LogUtil.logInfo(OrderProducer.class, String.format("init producer configuration: %s", properties));
+    }
+
+    public void sendMessage(String topicName, String key, String value) {
+        KafkaProducer<String, String> producer = null;
+        try {
+            producer = new KafkaProducer<>(properties);
+            if (!StringUtils.isEmpty(topicName) && !StringUtils.isEmpty(key) && !StringUtils.isEmpty(value)) {
+                producer.send(new ProducerRecord<>(topicName, key, value), producerListenser);
+            }
+        } catch (Exception e) {
+            LogUtil.logError(this.getClass(), String.format("met exception when sending msg, exception is: %s", e));
+        } finally {
+            if (producer != null) {
+                producer.close();
             }
         }
     }
+
+    private static void initProducerConfig() {
+        properties = new Properties();
+        properties.put("bootstrap.servers", "127.0.0.1:9092");
+        properties.put("acks", "all");
+        properties.put("retries", 10);
+        properties.put("buffer.memory", 33554432);
+        properties.put("key.serializer",
+                "org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("value.serializer",
+                "org.apache.kafka.common.serialization.StringSerializer");
+    }
 }
+
