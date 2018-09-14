@@ -1,6 +1,7 @@
 package com.seckill.backend.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.seckill.backend.common.constants.RedisConstants;
 import com.seckill.backend.common.lock.RedisPool;
 import com.seckill.backend.dao.mapper.OrderDao;
 import com.seckill.backend.dao.mapper.ProductDao;
@@ -37,6 +38,12 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean createOrder(String itemId, int buyNumber) {
         Jedis jedis = RedisPool.getConnResource();
+        long remainingNumber = jedis.decrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
+        if (remainingNumber < 0) {
+            //failed seckill,recover amount
+            jedis.incrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
+            return false;
+        }
         return false;
     }
 }
