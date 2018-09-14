@@ -24,6 +24,7 @@ public class OrderConsumer {
         properties = new Properties();
         properties.put("bootstrap.servers", "127.0.0.1:9092");
         properties.put("group.id", "orderConsumerGroup");
+        //auto commit offset
         properties.put("enable.auto.commit", "true");
         properties.put("auto.commit.interval.ms", "1000");
         properties.put("session.timeout.ms", "60000");
