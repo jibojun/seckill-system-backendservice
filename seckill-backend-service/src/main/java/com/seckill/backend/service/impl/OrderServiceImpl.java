@@ -7,6 +7,7 @@ import com.seckill.backend.dao.mapper.OrderDao;
 import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.IOrderService;
 import com.seckill.backend.service.cache.CacheManager;
+import com.seckill.backend.service.mq.OrderProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 
@@ -26,6 +27,9 @@ public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     private CacheManager cacheManager;
+
+    @Autowired
+    private OrderProducer orderProducer;
 
 
     /**
