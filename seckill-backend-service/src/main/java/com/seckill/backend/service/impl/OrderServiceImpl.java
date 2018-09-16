@@ -10,7 +10,13 @@ import com.seckill.backend.service.api.IOrderService;
 import com.seckill.backend.service.cache.CacheManager;
 import com.seckill.backend.service.mq.OrderProducer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Response;
+import redis.clients.jedis.Transaction;
+import sun.rmi.runtime.Log;
+
+import java.util.List;
 
 /**
  * @Author: Bojun Ji
@@ -46,14 +52,19 @@ public class OrderServiceImpl implements IOrderService {
         try {
             jedis.watch(RedisConstants.PRODUCT_KEY_PREFIX + itemId);
             int currentNumber = Integer.valueOf(jedis.get(RedisConstants.PRODUCT_KEY_PREFIX + itemId));
-            if (currentNumber <= 0) {
-                LogUtil.logInfo(this.getClass(), String.format("seckill failed since no amount of product: %s", itemId));
+            if (currentNumber <= 0 || currentNumber - buyNumber < 0) {
+                //no amount or not enough
+                LogUtil.logInfo(this.getClass(), String.format("seckill failed since no amount of product,or the desired buy numbers is more than current amount, product: %s", itemId));
                 return false;
             }
-            long remainingNumber = jedis.decrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
-            if (remainingNumber < 0) {
-                //failed seckill,recover amount
-                jedis.incrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
+            //begin transaction
+            Transaction transaction = jedis.multi();
+            //decr
+            transaction.decrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
+            List<Object> result = transaction.exec();
+            if (CollectionUtils.isEmpty(result)) {
+                //failed seckill
+                LogUtil.logInfo(this.getClass(), String.format("seckill failed since product key adjust by other threads, product: %s", itemId));
                 return false;
             }
         } catch (Exception e) {
