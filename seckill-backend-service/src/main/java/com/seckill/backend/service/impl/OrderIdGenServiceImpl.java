@@ -7,7 +7,7 @@ import com.seckill.backend.service.api.IOrderIdGenService;
  * @Description:
  * @Date: 2018/9/17_12:57 AM
  */
-public class OrderIdGenService implements IOrderIdGenService {
+public class OrderIdGenServiceImpl implements IOrderIdGenService {
     @Override
     public long getOrderId() {
         return 0;
