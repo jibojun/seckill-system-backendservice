@@ -67,11 +67,13 @@ public class OrderServiceImpl implements IOrderService {
                 LogUtil.logInfo(this.getClass(), String.format("seckill failed since product key adjust by other threads, product: %s", itemId));
                 return false;
             }
+            LogUtil.logInfo(this.getClass(), String.format("seckill is successful, product: %s, begin to push message to MQ and create order", itemId));
+            return true;
         } catch (Exception e) {
-
+            LogUtil.logError(this.getClass(), String.format("seckill failed due to exception, item is :%s, exception is: %s", itemId, e));
         } finally {
             jedis.unwatch();
         }
-        return true;
+        return false;
     }
 }
