@@ -38,5 +38,6 @@ public class CustomContextLoaderListener extends ContextLoaderListener {
                 LogUtil.logInfo(this.getClass(), String.format("put product: [%s] to redis cache, amount is: %s", JSON.toJSONString(product), returnedValue));
             }
         }
+        //TODO load order id data from DB and put to redis
     }
 }
