@@ -68,6 +68,7 @@ public class OrderServiceImpl implements IOrderService {
                 return false;
             }
             LogUtil.logInfo(this.getClass(), String.format("seckill is successful, product: %s, begin to push message to MQ and create order", itemId));
+            //TODO create order
             return true;
         } catch (Exception e) {
             LogUtil.logError(this.getClass(), String.format("seckill failed due to exception, item is :%s, exception is: %s", itemId, e));
