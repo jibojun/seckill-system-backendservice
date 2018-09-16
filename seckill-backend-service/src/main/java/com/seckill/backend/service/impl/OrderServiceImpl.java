@@ -12,9 +12,7 @@ import com.seckill.backend.service.mq.OrderProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Response;
 import redis.clients.jedis.Transaction;
-import sun.rmi.runtime.Log;
 
 import java.util.List;
 
