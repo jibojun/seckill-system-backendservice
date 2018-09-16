@@ -3,6 +3,7 @@ package com.seckill.backend.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.seckill.backend.common.constants.RedisConstants;
 import com.seckill.backend.common.lock.RedisPool;
+import com.seckill.backend.common.logger.LogUtil;
 import com.seckill.backend.dao.mapper.OrderDao;
 import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.IOrderService;
@@ -45,7 +46,10 @@ public class OrderServiceImpl implements IOrderService {
         try {
             jedis.watch(RedisConstants.PRODUCT_KEY_PREFIX + itemId);
             int currentNumber = Integer.valueOf(jedis.get(RedisConstants.PRODUCT_KEY_PREFIX + itemId));
-
+            if (currentNumber <= 0) {
+                LogUtil.logInfo(this.getClass(), String.format("seckill failed since no amount of product: %s", itemId));
+                return false;
+            }
             long remainingNumber = jedis.decrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
             if (remainingNumber < 0) {
                 //failed seckill,recover amount
@@ -55,7 +59,7 @@ public class OrderServiceImpl implements IOrderService {
         } catch (Exception e) {
 
         } finally {
-
+            jedis.unwatch();
         }
         return true;
     }
