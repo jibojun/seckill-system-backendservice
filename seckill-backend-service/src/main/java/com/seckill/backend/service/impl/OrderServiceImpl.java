@@ -42,12 +42,21 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public boolean createOrder(String itemId, int buyNumber) {
         Jedis jedis = RedisPool.getConnResource();
-        long remainingNumber = jedis.decrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
-        if (remainingNumber < 0) {
-            //failed seckill,recover amount
-            jedis.incrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
-            return false;
+        try {
+            jedis.watch(RedisConstants.PRODUCT_KEY_PREFIX + itemId);
+            int currentNumber = Integer.valueOf(jedis.get(RedisConstants.PRODUCT_KEY_PREFIX + itemId));
+
+            long remainingNumber = jedis.decrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
+            if (remainingNumber < 0) {
+                //failed seckill,recover amount
+                jedis.incrBy(RedisConstants.PRODUCT_KEY_PREFIX + itemId, buyNumber);
+                return false;
+            }
+        } catch (Exception e) {
+
+        } finally {
+
         }
-        return false;
+        return true;
     }
 }
