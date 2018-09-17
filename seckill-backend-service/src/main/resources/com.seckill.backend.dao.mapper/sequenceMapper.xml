@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seckill.backend.dao.mapper.SequenceDao" >
+    <resultMap id="resultMap" type="com.seckill.backend.dao.entity.Order" >
+        <id column="order_id" property="orderId" jdbcType="INTEGER" />
+        <result column="product_id" property="productId" jdbcType="INTEGER" />
+        <result column="product_numbers" property="productNumes" jdbcType="INTEGER" />
+        <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+        <result column="is_success" property="isSuccess" jdbcType="TINYINT" />
+        <result column="order_date" property="orderDate" jdbcType="DATETIME" />
+    </resultMap>
+
+</mapper>
