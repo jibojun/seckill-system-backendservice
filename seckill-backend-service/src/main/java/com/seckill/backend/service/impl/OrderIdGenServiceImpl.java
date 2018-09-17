@@ -4,6 +4,7 @@ import com.seckill.backend.common.constants.RedisConstants;
 import com.seckill.backend.common.lock.RedisPool;
 import com.seckill.backend.common.logger.LogUtil;
 import com.seckill.backend.service.api.IOrderIdGenService;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -11,6 +12,7 @@ import redis.clients.jedis.Jedis;
  * @Description:
  * @Date: 2018/7/17_12:57 AM
  */
+@Component
 public class OrderIdGenServiceImpl implements IOrderIdGenService {
     @Override
     public long getOrderId() {

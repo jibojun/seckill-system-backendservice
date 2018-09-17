@@ -6,6 +6,7 @@ import com.seckill.backend.common.lock.RedisPool;
 import com.seckill.backend.common.logger.LogUtil;
 import com.seckill.backend.dao.mapper.OrderDao;
 import com.seckill.backend.dao.mapper.ProductDao;
+import com.seckill.backend.service.api.IOrderIdGenService;
 import com.seckill.backend.service.api.IOrderService;
 import com.seckill.backend.service.cache.CacheManager;
 import com.seckill.backend.service.mq.OrderProducer;
@@ -36,6 +37,9 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private OrderProducer orderProducer;
 
+    @Autowired
+    private IOrderIdGenService orderIdGenService;
+
 
     /**
      * check product number in redis, by decr, when there is no amount, means seckill is failed
@@ -45,7 +49,7 @@ public class OrderServiceImpl implements IOrderService {
      * @return
      */
     @Override
-    public boolean createOrder(String itemId, int buyNumber) {
+    public Long createOrder(String itemId, int buyNumber) {
         Jedis jedis = RedisPool.getConnResource();
         try {
             jedis.watch(RedisConstants.PRODUCT_KEY_PREFIX + itemId);
@@ -53,7 +57,7 @@ public class OrderServiceImpl implements IOrderService {
             if (currentNumber <= 0 || currentNumber - buyNumber < 0) {
                 //no amount or not enough
                 LogUtil.logInfo(this.getClass(), String.format("seckill failed since no amount of product,or the desired buy numbers is more than current amount, product: %s", itemId));
-                return false;
+                return null;
             }
             //begin transaction
             Transaction transaction = jedis.multi();
@@ -63,16 +67,18 @@ public class OrderServiceImpl implements IOrderService {
             if (CollectionUtils.isEmpty(result)) {
                 //failed seckill
                 LogUtil.logInfo(this.getClass(), String.format("seckill failed since product key adjust by other threads, product: %s", itemId));
-                return false;
+                return null;
             }
             LogUtil.logInfo(this.getClass(), String.format("seckill is successful, product: %s, begin to push message to MQ and create order", itemId));
             //TODO create order
-            return true;
+            //get order id
+            long orderId = orderIdGenService.getOrderId();
+            return orderId;
         } catch (Exception e) {
             LogUtil.logError(this.getClass(), String.format("seckill failed due to exception, item is :%s, exception is: %s", itemId, e));
         } finally {
             jedis.unwatch();
         }
-        return false;
+        return null;
     }
 }
