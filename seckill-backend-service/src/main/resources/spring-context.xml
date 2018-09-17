@@ -29,7 +29,7 @@
 
     <!--transaction manager-->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="shardingDataSource"></property>
+        <property name="dataSource" ref="shardingDataSource"/>
     </bean>
     <tx:annotation-driven/>
 
