@@ -9,6 +9,7 @@ import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.IOrderIdGenService;
 import com.seckill.backend.service.api.IOrderService;
 import com.seckill.backend.service.cache.CacheManager;
+import com.seckill.backend.service.mq.OrderMqConstants;
 import com.seckill.backend.service.mq.OrderProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -70,9 +71,10 @@ public class OrderServiceImpl implements IOrderService {
                 return null;
             }
             LogUtil.logInfo(this.getClass(), String.format("seckill is successful, product: %s, begin to push message to MQ and create order", itemId));
-            //TODO create order
             //get order id
             long orderId = orderIdGenService.getOrderId();
+            //send message
+            orderProducer.sendMessage(OrderMqConstants.ORDER_TOPIC_NAME, OrderMqConstants.ORDER_ID_KEY, String.valueOf(orderId));
             return orderId;
         } catch (Exception e) {
             LogUtil.logError(this.getClass(), String.format("seckill failed due to exception, item is :%s, exception is: %s", itemId, e));
