@@ -1,6 +1,7 @@
 package com.seckill.backend.service.mq;
 
 import com.seckill.backend.common.logger.LogUtil;
+import com.seckill.backend.dao.entity.Order;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,10 @@ public class OrderProducer {
         LogUtil.logInfo(OrderProducer.class, String.format("init producer configuration: %s", properties));
     }
 
-    public void sendMessage(String topicName, String key, String value) {
+    public void sendMessage(String topicName, String key, Order value) {
         try (KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
             if (!StringUtils.isEmpty(topicName) && !StringUtils.isEmpty(key) && !StringUtils.isEmpty(value)) {
-                producer.send(new ProducerRecord<>(topicName, key, value), producerListenser);
+                producer.send(new ProducerRecord(topicName, key, value), producerListenser);
             }
         } catch (Exception e) {
             LogUtil.logError(this.getClass(), String.format("met exception when sending msg, exception is: %s", e));
