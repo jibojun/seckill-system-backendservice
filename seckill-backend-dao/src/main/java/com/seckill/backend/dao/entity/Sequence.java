@@ -7,7 +7,7 @@ package com.seckill.backend.dao.entity;
  */
 public class Sequence {
     private String tabeleName;
-    private long id;
+    private int id;
 
     public String getTabeleName() {
         return tabeleName;
@@ -17,11 +17,11 @@ public class Sequence {
         this.tabeleName = tabeleName;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 }
