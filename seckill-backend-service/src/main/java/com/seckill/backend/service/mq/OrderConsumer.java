@@ -35,8 +35,8 @@ public class OrderConsumer {
         properties.put("auto.commit.interval.ms", "1000");
         properties.put("session.timeout.ms", "60000");
         properties.put("key.deserializer",
-                "org.apache.kafka.common.serialization.StringDeserializer");
+                "com.seckill.backend.service.serialization.HessianDeserializer");
         properties.put("value.deserializer",
-                "org.apache.kafka.common.serialization.StringDeserializer");
+                "com.seckill.backend.service.serialization.HessianDeserializer");
     }
 }
