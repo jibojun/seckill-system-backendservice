@@ -30,6 +30,6 @@ public class RedisConstants {
 
     public static final String ORDER_KEY_PREFIX = "order@";
 
-    public static final String ORDER_ID_KEY = "orderid@sequence";
+    public static final String SEQUENCE_KEY_PREFIX = "sequence@";
 
 }
