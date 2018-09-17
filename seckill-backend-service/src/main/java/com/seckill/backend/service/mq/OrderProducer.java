@@ -43,9 +43,9 @@ public class OrderProducer {
         properties.put("retries", 10);
         properties.put("buffer.memory", 33554432);
         properties.put("key.serializer",
-                "org.apache.kafka.common.serialization.StringSerializer");
+                "com.seckill.backend.service.serialization.HessianSerializer");
         properties.put("value.serializer",
-                "org.apache.kafka.common.serialization.StringSerializer");
+                "com.seckill.backend.service.serialization.HessianSerializer");
     }
 }
 
