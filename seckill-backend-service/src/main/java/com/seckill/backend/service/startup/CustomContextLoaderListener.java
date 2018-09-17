@@ -8,6 +8,8 @@ import com.seckill.backend.dao.entity.Product;
 import com.seckill.backend.dao.entity.Sequence;
 import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.dao.mapper.SequenceDao;
+import com.seckill.backend.service.api.ProductInfo;
+import com.seckill.backend.service.cache.CacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.ContextLoaderListener;
@@ -38,6 +40,13 @@ public class CustomContextLoaderListener extends ContextLoaderListener {
                 //put amount to redis
                 long returnedValue = jedis.incrBy(RedisConstants.PRODUCT_KEY_PREFIX + String.valueOf(product.getProductId()), product.getAmount());
                 LogUtil.logInfo(this.getClass(), String.format("put product: [%s] to redis cache, amount is: %s", JSON.toJSONString(product), returnedValue));
+                //init jetcache detailed date with caffeine/redis
+                try {
+                    CacheManager cacheManager = context.getBean("cacheManager", CacheManager.class);
+                    cacheManager.putProductCache(new ProductInfo(product.getProductId(), product.getProductName(), product.getPrice(), product.getAmount()));
+                } catch (Exception e) {
+                    LogUtil.logError(this.getClass(), String.format("met excepetion when init jetcache detailed data, exception is: %s", e));
+                }
             }
         }
         //load sequence info from DB and put it to redis

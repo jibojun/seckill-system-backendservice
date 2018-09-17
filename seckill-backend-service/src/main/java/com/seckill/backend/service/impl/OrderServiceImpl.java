@@ -70,6 +70,8 @@ public class OrderServiceImpl implements IOrderService {
                 LogUtil.logInfo(this.getClass(), String.format("seckill failed since product key adjust by other threads, product: %s", itemId));
                 return null;
             }
+            //invalidate product cache from local/redis
+            cacheManager.removeProductCache(Long.parseLong(itemId));
             LogUtil.logInfo(this.getClass(), String.format("seckill is successful, product: %s, begin to push message to MQ and create order", itemId));
             //get order id
             long orderId = orderIdGenService.getOrderId();
