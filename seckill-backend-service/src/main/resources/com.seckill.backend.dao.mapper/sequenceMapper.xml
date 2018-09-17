@@ -11,7 +11,7 @@
     </select>
 
     <update id="updateSequence" parameterType="Sequence">
-        update sequence set id=#{id} where table_name=#{tableName}
+        update sequence set sequence_id=#{sequenceId} where table_name=#{tableName}
     </update>
 
 </mapper>
