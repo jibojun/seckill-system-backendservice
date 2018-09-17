@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.seckill.backend.common.constants.RedisConstants;
 import com.seckill.backend.common.lock.RedisPool;
 import com.seckill.backend.common.logger.LogUtil;
+import com.seckill.backend.dao.entity.Order;
 import com.seckill.backend.dao.mapper.OrderDao;
 import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.IOrderIdGenService;
@@ -75,8 +76,10 @@ public class OrderServiceImpl implements IOrderService {
             LogUtil.logInfo(this.getClass(), String.format("seckill is successful, product: %s, begin to push message to MQ and create order", itemId));
             //get order id
             long orderId = orderIdGenService.getOrderId();
+            Order order = new Order();
+            order.setOrderId((int) orderId);
             //send message
-            orderProducer.sendMessage(OrderMqConstants.ORDER_TOPIC_NAME, OrderMqConstants.ORDER_ID_KEY, String.valueOf(orderId));
+            orderProducer.sendMessage(OrderMqConstants.ORDER_TOPIC_NAME, OrderMqConstants.ORDER_ID_KEY, order);
             return orderId;
         } catch (Exception e) {
             LogUtil.logError(this.getClass(), String.format("seckill failed due to exception, item is :%s, exception is: %s", itemId, e));
