@@ -17,6 +17,7 @@ import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -78,6 +79,10 @@ public class OrderServiceImpl implements IOrderService {
             long orderId = orderIdGenService.getOrderId();
             Order order = new Order();
             order.setOrderId((int) orderId);
+            order.setProductId(Integer.valueOf(itemId));
+            order.setProductNumbers(buyNumber);
+            order.setSuccess(true);
+            order.setOrderDate(Calendar.getInstance());
             //send message
             orderProducer.sendMessage(OrderMqConstants.ORDER_TOPIC_NAME, OrderMqConstants.ORDER_ID_KEY, order);
             return orderId;
