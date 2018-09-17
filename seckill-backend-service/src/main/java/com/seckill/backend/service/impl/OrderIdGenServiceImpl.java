@@ -14,11 +14,13 @@ import redis.clients.jedis.Jedis;
  */
 @Component
 public class OrderIdGenServiceImpl implements IOrderIdGenService {
+    private static final String ORDER_TABLE_NAME = "";
+
     @Override
     public long getOrderId() {
         try {
             Jedis jedis = RedisPool.getPool().getResource();
-            return jedis.incr(RedisConstants.ORDER_ID_KEY);
+            return jedis.incr(String.format("%s%s", RedisConstants.SEQUENCE_KEY_PREFIX, ORDER_TABLE_NAME));
         } catch (Exception e) {
             LogUtil.logError(this.getClass(), String.format("get order id failed, exception: %s", e));
         }
