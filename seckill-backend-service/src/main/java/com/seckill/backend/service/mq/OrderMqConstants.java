@@ -8,5 +8,5 @@ package com.seckill.backend.service.mq;
 public class OrderMqConstants {
     public static final String ORDER_TOPIC_NAME = "com.topic.order";
 
-    public static final String ORDER_ID_KEY = "orderId";
+    public static final String ORDER_KEY = "order";
 }

@@ -36,8 +36,17 @@ public class OrderConsumer {
         ConsumerRecords<String, Order> consumerRecords;
         while (true) {
             consumerRecords = consumer.poll(Duration.ofMillis(1000));
-            for (ConsumerRecord consumerRecord : consumerRecords) {
-
+            for (ConsumerRecord<String, Order> consumerRecord : consumerRecords) {
+                long offset = consumerRecord.offset();
+                int partition = consumerRecord.partition();
+                String key = consumerRecord.key();
+                Order value = consumerRecord.value();
+                LogUtil.logInfo(this.getClass(), offset + " " + partition + " " + key + " " + value);
+                if (key.equalsIgnoreCase(OrderMqConstants.ORDER_KEY)) {
+                    LogUtil.logInfo(this.getClass(), String.format("got a message and put order to DB, order: %s", value));
+                    boolean result = dbOpsService.createOrderAndUpdateProduct(value);
+                    LogUtil.logInfo(this.getClass(), String.format("order and product DB operation result: %s", result));
+                }
             }
         }
     }

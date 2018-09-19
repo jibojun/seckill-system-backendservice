@@ -79,7 +79,7 @@ public class OrderServiceImpl implements IOrderService {
             order.setSuccess(true);
             order.setOrderDate(Calendar.getInstance());
             //send message
-            orderProducer.sendMessage(OrderMqConstants.ORDER_TOPIC_NAME, OrderMqConstants.ORDER_ID_KEY, order);
+            orderProducer.sendMessage(OrderMqConstants.ORDER_TOPIC_NAME, OrderMqConstants.ORDER_KEY, order);
             return orderId;
         } catch (Exception e) {
             LogUtil.logError(this.getClass(), String.format("seckill failed due to exception, item is :%s, exception is: %s", itemId, e));
