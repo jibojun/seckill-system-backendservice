@@ -10,6 +10,8 @@ import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.dao.mapper.SequenceDao;
 import com.seckill.backend.service.api.ProductInfo;
 import com.seckill.backend.service.cache.CacheManager;
+import com.seckill.backend.service.mq.OrderConsumer;
+import com.seckill.backend.service.mq.OrderMqConstants;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.ContextLoaderListener;
@@ -17,6 +19,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import redis.clients.jedis.Jedis;
 
 import javax.servlet.ServletContextEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,5 +63,11 @@ public class CustomContextLoaderListener extends ContextLoaderListener {
                 LogUtil.logInfo(this.getClass(), String.format("put sequence: [%s] to redis cache", JSON.toJSONString(sequence)));
             }
         }
+        //start kafka consumer
+        OrderConsumer orderConsumer = context.getBean("OrderConsumer", OrderConsumer.class);
+        List<String> topicList = new ArrayList<>();
+        topicList.add(OrderMqConstants.ORDER_TOPIC_NAME);
+        orderConsumer.consumer(topicList);
+        LogUtil.logInfo(this.getClass(), String.format("start to consume topics: %s", JSON.toJSONString(topicList)));
     }
 }
