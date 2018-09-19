@@ -28,9 +28,9 @@ public class OrderProducer {
     }
 
     public void sendMessage(String topicName, String key, Order value) {
-        try (KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
-            if (!StringUtils.isEmpty(topicName) && !StringUtils.isEmpty(key) && !StringUtils.isEmpty(value)) {
-                producer.send(new ProducerRecord(topicName, key, value), producerListenser);
+        try (KafkaProducer<String, Order> producer = new KafkaProducer<>(properties)) {
+            if (!StringUtils.isEmpty(topicName) && !StringUtils.isEmpty(key) && value != null) {
+                producer.send(new ProducerRecord<>(topicName, key, value), producerListenser);
             }
         } catch (Exception e) {
             LogUtil.logError(this.getClass(), String.format("met exception when sending msg, exception is: %s", e));
