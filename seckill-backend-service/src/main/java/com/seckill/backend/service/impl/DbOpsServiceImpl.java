@@ -38,11 +38,13 @@ public class DbOpsServiceImpl implements IDbOpsService {
             return false;
         }
         try {
+            Product product = getCurrentProductInfo(order.getProductId());
+            if (product == null) {
+                return false;
+            }
             //order amount
-            order.setOrderAmount(getOrderTotalPrice(order.getProductId(), order.getProductNumbers()));
-            Product product = new Product();
-            product.setProductId(order.getProductId());
-            product.setAmount(getProductAmount(order.getProductId(), order.getProductNumbers()));
+            order.setOrderAmount(getOrderTotalPrice(order.getProductId(), order.getProductNumbers(), product.getPrice()));
+            product.setAmount(getProductAmount(order.getProductId(), order.getProductNumbers(), product.getAmount()));
             orderDao.insert(order);
             productDao.updateProductAmount(product);
         } catch (Exception e) {
@@ -59,7 +61,7 @@ public class DbOpsServiceImpl implements IDbOpsService {
      * @param productNumbers
      * @return
      */
-    private BigDecimal getOrderTotalPrice(int productId, int productNumbers) {
+    private BigDecimal getOrderTotalPrice(int productId, int productNumbers, BigDecimal productPrice) {
         return null;
     }
 
@@ -70,7 +72,7 @@ public class DbOpsServiceImpl implements IDbOpsService {
      * @param productNumbers
      * @return
      */
-    private int getProductAmount(int productId, int productNumbers) {
+    private int getProductAmount(int productId, int productNumbers, int currentNumber) {
         return 0;
     }
 
