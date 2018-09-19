@@ -1,9 +1,12 @@
 package com.seckill.backend.service.mq;
 
 import com.seckill.backend.common.logger.LogUtil;
+import com.seckill.backend.dao.entity.Order;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
@@ -24,6 +27,11 @@ public class OrderConsumer {
     public void consumer(List<String> topics) {
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
         consumer.subscribe(topics);
+        ConsumerRecords<String,Order> consumerRecords;
+        while (true) {
+            consumer.poll(Duration.ofMillis(1000));
+            
+        }
     }
 
     private static void initConsumerConfig() {
