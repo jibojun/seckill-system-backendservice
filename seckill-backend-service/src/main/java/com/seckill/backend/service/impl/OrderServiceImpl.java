@@ -5,8 +5,6 @@ import com.seckill.backend.common.constants.RedisConstants;
 import com.seckill.backend.common.lock.RedisPool;
 import com.seckill.backend.common.logger.LogUtil;
 import com.seckill.backend.dao.entity.Order;
-import com.seckill.backend.dao.mapper.OrderDao;
-import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.IOrderIdGenService;
 import com.seckill.backend.service.api.IOrderService;
 import com.seckill.backend.service.cache.CacheManager;
@@ -17,7 +15,6 @@ import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
