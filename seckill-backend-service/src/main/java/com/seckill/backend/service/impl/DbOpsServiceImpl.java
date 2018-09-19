@@ -73,4 +73,13 @@ public class DbOpsServiceImpl implements IDbOpsService {
     private int getProductAmount(int productId, int productNumbers) {
         return 0;
     }
+
+    private Product getCurrentProductInfo(int productId) {
+        try {
+            return productDao.queryProductByPk(productId);
+        } catch (Exception e) {
+            LogUtil.logError(this.getClass(), String.format("met exception when query product info by pk, exception is: %s", e));
+        }
+        return null;
+    }
 }
