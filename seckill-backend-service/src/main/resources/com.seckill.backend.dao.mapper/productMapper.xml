@@ -13,7 +13,7 @@
         select * from product
     </select>
 
-    <select id="queryProductByPk" parameterType="Integer" resultMap="resultMap">
+    <select id="queryProductByPk" parameterType="Integer" resultMap="com.seckill.backend.dao.entity.Product">
         select * from product where product_id=#{productId}
     </select>
 

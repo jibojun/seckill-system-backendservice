@@ -14,7 +14,7 @@ import java.util.List;
 public interface ProductDao {
     List<Product> queryAllProducts() throws DataAccessException;
 
-    List<Product> queryProductByPk(@Param("productId") int productId) throws DataAccessException;
+    Product queryProductByPk(@Param("productId") int productId) throws DataAccessException;
 
     List<Product> queryProductByName(@Param("productName") String productName) throws DataAccessException;
 
