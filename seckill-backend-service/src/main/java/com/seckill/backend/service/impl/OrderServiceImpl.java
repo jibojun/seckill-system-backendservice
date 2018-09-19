@@ -29,12 +29,6 @@ import java.util.List;
 public class OrderServiceImpl implements IOrderService {
 
     @Autowired
-    private OrderDao orderDao;
-
-    @Autowired
-    private ProductDao productDao;
-
-    @Autowired
     private CacheManager cacheManager;
 
     @Autowired
