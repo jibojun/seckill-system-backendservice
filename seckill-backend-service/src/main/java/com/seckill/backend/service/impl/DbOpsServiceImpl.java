@@ -43,8 +43,8 @@ public class DbOpsServiceImpl implements IDbOpsService {
                 return false;
             }
             //order amount
-            order.setOrderAmount(getOrderTotalPrice(order.getProductId(), order.getProductNumbers(), product.getPrice()));
-            product.setAmount(getProductAmount(order.getProductId(), order.getProductNumbers(), product.getAmount()));
+            order.setOrderAmount(product.getPrice().multiply(BigDecimal.valueOf(order.getProductNumbers())));
+            product.setAmount(product.getAmount() - order.getProductNumbers());
             orderDao.insert(order);
             productDao.updateProductAmount(product);
         } catch (Exception e) {
@@ -52,28 +52,6 @@ public class DbOpsServiceImpl implements IDbOpsService {
             return false;
         }
         return true;
-    }
-
-    /**
-     * calculate the order amount
-     *
-     * @param productId
-     * @param productNumbers
-     * @return
-     */
-    private BigDecimal getOrderTotalPrice(int productId, int productNumbers, BigDecimal productPrice) {
-        return null;
-    }
-
-    /**
-     * get product amount after order
-     *
-     * @param productId
-     * @param productNumbers
-     * @return
-     */
-    private int getProductAmount(int productId, int productNumbers, int currentNumber) {
-        return 0;
     }
 
     private Product getCurrentProductInfo(int productId) {
