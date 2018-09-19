@@ -6,6 +6,7 @@ import com.seckill.backend.dao.entity.Product;
 import com.seckill.backend.dao.mapper.OrderDao;
 import com.seckill.backend.dao.mapper.ProductDao;
 import com.seckill.backend.service.api.IDbOpsService;
+import com.seckill.backend.service.cache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,6 +26,9 @@ public class DbOpsServiceImpl implements IDbOpsService {
 
     @Autowired
     private OrderDao orderDao;
+
+    @Autowired
+    private CacheManager cacheManager;
 
     /**
      * create order and update product amount
@@ -47,6 +51,8 @@ public class DbOpsServiceImpl implements IDbOpsService {
             product.setAmount(product.getAmount() - order.getProductNumbers());
             orderDao.insert(order);
             productDao.updateProductAmount(product);
+            //invalid product cache
+            cacheManager.removeProductCache(product.getProductId());
         } catch (Exception e) {
             LogUtil.logError(this.getClass(), String.format("met exception when doing order/product update, exception is: %s", e));
             return false;
