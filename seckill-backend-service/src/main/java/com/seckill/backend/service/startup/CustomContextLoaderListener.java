@@ -56,7 +56,7 @@ public class CustomContextLoaderListener extends ContextLoaderListener {
             Jedis jedis = RedisPool.getConnResource();
             for (Sequence sequence : sequenceList) {
                 //put sequence to cache
-                jedis.set(String.format("%s%s", RedisConstants.SEQUENCE_KEY_PREFIX, sequence.getTabeleName()), String.valueOf(sequence.getId()));
+                jedis.set(String.format("%s%s", RedisConstants.SEQUENCE_KEY_PREFIX, sequence.getTabeleName()), String.valueOf(sequence.getSequenceId()));
                 LogUtil.logInfo(this.getClass(), String.format("put sequence: [%s] to redis cache", JSON.toJSONString(sequence)));
             }
         }
