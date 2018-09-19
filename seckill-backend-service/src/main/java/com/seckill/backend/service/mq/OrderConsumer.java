@@ -2,9 +2,11 @@ package com.seckill.backend.service.mq;
 
 import com.seckill.backend.common.logger.LogUtil;
 import com.seckill.backend.dao.entity.Order;
+import com.seckill.backend.service.api.IDbOpsService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -18,6 +20,9 @@ import java.util.Properties;
  */
 @Component
 public class OrderConsumer {
+    @Autowired
+    private IDbOpsService dbOpsService;
+
     private static Properties properties;
 
     static {
