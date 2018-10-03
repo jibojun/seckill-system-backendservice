@@ -61,6 +61,7 @@ public class JetCacheConfig {
         localBuilders.put(CacheConsts.DEFAULT_AREA, localBuilder);
 
         //remote cache, redis, with encoder and decoder
+        RedisPool.initRedisPool();
         Map remoteBuilders = new HashMap();
         RedisCacheBuilder remoteCacheBuilder = RedisCacheBuilder.createRedisCacheBuilder()
                 .keyConvertor(FastjsonKeyConvertor.INSTANCE)

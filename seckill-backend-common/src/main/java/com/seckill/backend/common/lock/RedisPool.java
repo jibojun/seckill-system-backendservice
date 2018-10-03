@@ -28,7 +28,7 @@ public class RedisPool {
         pool = new JedisPool(config, RedisConstants.REDIS_HOST);
     }
 
-    private static JedisPool getPool() {
+    public static JedisPool getPool() {
         return pool;
     }
 
