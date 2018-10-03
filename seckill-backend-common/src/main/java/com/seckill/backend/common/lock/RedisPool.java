@@ -14,10 +14,6 @@ public class RedisPool {
 
     private static JedisPool pool;
 
-    static {
-        initRedisPool();
-    }
-
     /**
      * init a redis connection pool with configuration assigned in constants
      */
@@ -29,10 +25,10 @@ public class RedisPool {
         config.setTestOnBorrow(RedisConstants.REDIS_TEST_ON_BORROW);
         config.setTestOnReturn(RedisConstants.REDIS_TEST_ON_RETURN);
         config.setBlockWhenExhausted(RedisConstants.REDIS_BLOCK_WHEN_EXHAUSTED);
-        pool = new JedisPool(config, RedisConstants.REDIS_HOST, RedisConstants.REDIS_PORT);
+        pool = new JedisPool(config, RedisConstants.REDIS_HOST);
     }
 
-    public static JedisPool getPool() {
+    private static JedisPool getPool() {
         return pool;
     }
 
