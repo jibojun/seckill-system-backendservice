@@ -7,7 +7,7 @@ import com.seckill.backend.common.logger.LogUtil;
 import com.seckill.backend.dao.entity.Product;
 import com.seckill.backend.dao.entity.Sequence;
 import com.seckill.backend.dao.mapper.ProductDao;
-import com.seckill.backend.dao.mapper.SequenceDao;
+import com.seckill.backend.dao.mapper.sequence.SequenceDao;
 import com.seckill.backend.service.api.ProductInfo;
 import com.seckill.backend.service.cache.CacheManager;
 import com.seckill.backend.service.mq.OrderConsumer;

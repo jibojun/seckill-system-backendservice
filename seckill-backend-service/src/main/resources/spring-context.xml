@@ -13,7 +13,7 @@
     <!--dubbo-->
     <dubbo:application name="seckill-backend"/>
     <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
-    <dubbo:protocol port="20880" name="dubbo"/>
+    <dubbo:protocol port="20880" name="dubbo" serialization="kryo"/>
     <dubbo:annotation package="com.seckill.backend.service.impl"/>
 
     <!--mybatis mapper scan-->
@@ -23,13 +23,13 @@
     </bean>
 
     <!--sqlSessionFactory -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="shardingDataSource"/>
         <property name="mapperLocations" value="classpath*:com.seckill.backend.dao.mapper/*Mapper.xml"/>
     </bean>
 
     <!--transaction manager-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="shardingDataSource"/>
     </bean>
     <tx:annotation-driven/>

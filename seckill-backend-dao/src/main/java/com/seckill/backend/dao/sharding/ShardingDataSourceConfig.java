@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Configuration
 public class ShardingDataSourceConfig {
-    @Bean(name="shardingDataSource")
+    @Bean(name = "shardingDataSource")
     public DataSource getDataSource() throws SQLException {
         Map<String, DataSource> dataSourceMap = new HashMap<>(2);
         dataSourceMap.put("dataSource_0", createDS("dataSource1"));
@@ -38,8 +38,9 @@ public class ShardingDataSourceConfig {
         TableRule orderDbShardingRule = TableRule.builder("t_order").actualTables(orderActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("order_id", new OrderDbSharding())).dataSourceRule(dataSourceRule).build();
         List<String> productActualTables = new ArrayList<>();
         productActualTables.add("product");
-        TableRule productDbShardingRule = TableRule.builder("t_product").actualTables(productActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("product_id", new ProductDbSharding())).dataSourceRule(dataSourceRule).build();;
-        List<TableRule> tableRuleList=new ArrayList<>();
+        TableRule productDbShardingRule = TableRule.builder("t_product").actualTables(productActualTables).databaseShardingStrategy(new DatabaseShardingStrategy("product_id", new ProductDbSharding())).dataSourceRule(dataSourceRule).build();
+
+        List<TableRule> tableRuleList = new ArrayList<>();
         tableRuleList.add(orderDbShardingRule);
         tableRuleList.add(productDbShardingRule);
 
@@ -55,9 +56,9 @@ public class ShardingDataSourceConfig {
     private DataSource createDS(String dataSourceName) {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setDriverClassName(Driver.class.getName());
-        dataSource.setUrl(String.format("jdbc:mysql://127.0.0.1:3306/%s", dataSourceName));
-        dataSource.setUsername("");
-        dataSource.setPassword("");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3306");
+        dataSource.setUsername("root");
+        dataSource.setPassword("test123");
         dataSource.setInitialSize(0);
         dataSource.setMaxActive(20);
         dataSource.setMinIdle(0);

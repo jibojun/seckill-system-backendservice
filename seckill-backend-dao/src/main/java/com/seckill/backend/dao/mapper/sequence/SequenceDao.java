@@ -1,4 +1,4 @@
-package com.seckill.backend.dao.mapper;
+package com.seckill.backend.dao.mapper.sequence;
 
 import com.seckill.backend.dao.entity.Sequence;
 import org.springframework.dao.DataAccessException;
